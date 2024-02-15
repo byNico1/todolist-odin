@@ -6,9 +6,12 @@ import {
   changeCurrentProject,
   deleteTodo,
   deleteProject,
+  saveLocalStorage,
 } from "./manageTodo";
 
 const app = document.querySelector("#app");
+
+// function
 
 function clearElement(element) {
   while (element.firstChild) {
@@ -73,9 +76,22 @@ function renderSingleTodo(projectTodos, element) {
     // set data atrribute to the to-do items project name
     // create to-do item title
 
-    const toDoTitle = document.createElement("div");
-    toDoTitle.classList.add("todo__title");
-    toDoTitle.textContent = todo.title;
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.id = todo.id;
+    checkbox.checked = todo.complete;
+    toDoBody.appendChild(checkbox);
+
+    const label = document.createElement("label");
+    label.htmlFor = todo.id;
+
+    const customCheckbox = document.createElement("span");
+    customCheckbox.classList.add("custom-checkbox");
+    label.appendChild(customCheckbox);
+
+    label.append(todo.title);
+    toDoBody.appendChild(label);
+
     // create to-do item details button
     const toDoDetails = document.createElement("div");
     toDoDetails.classList.add("todo__details");
@@ -90,7 +106,6 @@ function renderSingleTodo(projectTodos, element) {
     deleteTodoButton.textContent = "Delete";
     deleteTodoButton.addEventListener("click", (e) => deleteAndRenderTodo(e));
 
-    toDoBody.appendChild(toDoTitle);
     toDoBody.appendChild(toDoDetails);
     toDoBody.appendChild(toDoPriority);
     toDoBody.appendChild(deleteTodoButton);
@@ -374,6 +389,27 @@ function baseHomePage() {
   projectContainer.classList.add("project-container");
 
   const todosContainer = document.createElement("div");
+  todosContainer.addEventListener("click", (e) => {
+    const projectsKeys = Object.keys(allTodos);
+    if (e.target.tagName.toLowerCase() === "input") {
+      for (let project = 0; project < projectsKeys.length; project += 1) {
+        const selectedTask = allTodos[projectsKeys[project]].find(
+          (todo) => todo.id === e.target.id
+        );
+        if (selectedTask) {
+          selectedTask.complete = e.target.checked;
+          saveLocalStorage();
+        }
+        // const selectedTask = allTodos.find(
+        //   (task) => task.id === e.target.id
+        // );
+        // selectedTask.complete = e.target.checked;
+        // TODO: Finish
+        //  save();
+        //  renderTaskCount(selectedList);
+      }
+    }
+  });
   todosContainer.classList.add("todos-container");
   projectContainer.appendChild(todosContainer);
 

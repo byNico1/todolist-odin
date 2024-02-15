@@ -1,3 +1,7 @@
+:root {
+  --color-primary: rgb(54, 112, 199);
+}
+
 *,
 *::after,
 *::before {
@@ -10,6 +14,7 @@ h1 {
 }
 
 body {
+  font-family: "Courier New", Courier, monospace;
   margin: 0;
   padding: 0;
   font-size: 16px;
@@ -51,8 +56,9 @@ body {
   flex: 1;
   background-color: #ffffff;
   border-radius: 20px;
-  padding: 0 30px;
+  padding: 30px;
   display: flex;
+  gap: 15px;
   flex-direction: column;
   justify-content: center;
 }
@@ -73,6 +79,15 @@ body {
 
 .projects {
   flex: 1;
+  list-style: none;
+  padding: 0 0 0 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.projects li {
+  font-size: 1.1rem;
 }
 
 .options-container {
@@ -94,4 +109,28 @@ body {
   gap: 20px;
   flex: 1;
   align-items: flex-end;
+}
+
+[type="checkbox"] {
+  opacity: 0;
+  position: absolute;
+}
+
+.custom-checkbox {
+  --size: 0.75em;
+  display: inline-block;
+  width: var(--size);
+  height: var(--size);
+  margin-right: var(--size);
+  cursor: pointer;
+  border: 2px solid #000000;
+  border-radius: 50%;
+  transform: scale(1);
+  transition: transform 300ms ease-in-out;
+}
+
+[type="checkbox"]:checked + label .custom-checkbox {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  box-shadow: inset 0 0 0px 2px white;
 }

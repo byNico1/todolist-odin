@@ -12,12 +12,12 @@ const allTodos = JSON.parse(localStorage.getItem("allTodos")) || {
   home: [],
 };
 
-const createTodo = (title, id, details, priority, done = false) => ({
+const createTodo = (title, id, details, priority, complete = false) => ({
   title,
   id,
   details,
   priority,
-  done,
+  complete,
 });
 
 let currentProject =
@@ -45,7 +45,6 @@ function addNewTodo() {
   ).value;
 
   let id = Date.now().toString();
-  console.log(id);
 
   const project = getCurrentProject();
 
@@ -117,6 +116,7 @@ const deleteTodo = (index) => {
 
 const deleteProject = () => {
   if (getCurrentProject() === "home") {
+    alert("Home Can't Be deleted");
     return;
     // TODO: display a message saying it cant be removed home
   }
@@ -137,4 +137,5 @@ export {
   deleteTodo,
   changeCurrentProject,
   allTodos,
+  saveLocalStorage,
 };
